@@ -1455,7 +1455,7 @@ class VCloud_1_5_NodeDriver(VCloudNodeDriver):
         self._change_vm_cpu(vapp_href, ex_vm_cpu)
         self._change_vm_memory(vapp_href, ex_vm_memory)
         self._change_vm_script(vapp_href, ex_vm_script)
-        self._change_vm_ipmode(vapp_href, ex_vm_ipmode)
+        self._change_vm_ipmode(vapp_href, ex_vm_ipmode, ex_vm_network)
 
         # Power on the VM.
         if ex_deploy:
@@ -1932,7 +1932,7 @@ class VCloud_1_5_NodeDriver(VCloudNodeDriver):
             )
             self._wait_for_task_completion(res.object.get('href'))
 
-    def _change_vm_ipmode(self, vapp_or_vm_id, vm_ipmode):
+    def _change_vm_ipmode(self, vapp_or_vm_id, vm_ipmode, network):
         if vm_ipmode is None:
             vm_ipmode='POOL'
 #            return
@@ -1944,6 +1944,8 @@ class VCloud_1_5_NodeDriver(VCloudNodeDriver):
                 '%s/networkConnectionSection' % get_url_path(vm.get('href')))
             net_conns = res.object.findall(
                 fixxpath(res.object, 'NetworkConnection'))
+            if len(net_conns) == 1:
+                c = net_conns[0].set('network', #TODO)
             for c in net_conns:
                 c.find(fixxpath(c, 'IpAddressAllocationMode')).text = vm_ipmode
 
