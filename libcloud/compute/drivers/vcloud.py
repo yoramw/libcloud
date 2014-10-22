@@ -929,8 +929,9 @@ class Instantiate_1_5_VAppXML(object):
                       {'href': self.network.get('href')})
 
         if self.vm_fence is None:
-            fencemode = self.network.find(fixxpath(self.network,
-                                          'Configuration/FenceMode')).text
+            #fencemode = self.network.find(fixxpath(self.network,
+            #                              'Configuration/FenceMode')).text
+            fenchmode = 'bridged'
         else:
             fencemode = self.vm_fence
         ET.SubElement(configuration, 'FenceMode').text = fencemode
@@ -1430,8 +1431,9 @@ class VCloud_1_5_NodeDriver(VCloudNodeDriver):
         # Some providers don't require a network link
         if ex_network:
             network_href = self._get_network_href(ex_network)
-            network_elem = self.connection.request(
-                get_url_path(network_href)).object
+#            network_elem = self.connection.request(
+#                get_url_path(network_href)).object
+             network_elem = {'name': ex_network, 'href': network_href}
         else:
             network_elem = None
 
@@ -1932,7 +1934,8 @@ class VCloud_1_5_NodeDriver(VCloudNodeDriver):
 
     def _change_vm_ipmode(self, vapp_or_vm_id, vm_ipmode):
         if vm_ipmode is None:
-            return
+            vm_ipmode='POOL'
+#            return
 
         vms = self._get_vm_elements(vapp_or_vm_id)
 
