@@ -931,7 +931,7 @@ class Instantiate_1_5_VAppXML(object):
         if self.vm_fence is None:
             #fencemode = self.network.find(fixxpath(self.network,
             #                              'Configuration/FenceMode')).text
-            fenchmode = 'bridged'
+            fencemode = 'bridged'
         else:
             fencemode = self.vm_fence
         ET.SubElement(configuration, 'FenceMode').text = fencemode
