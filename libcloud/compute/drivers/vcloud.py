@@ -1433,7 +1433,7 @@ class VCloud_1_5_NodeDriver(VCloudNodeDriver):
             network_href = self._get_network_href(ex_network)
 #            network_elem = self.connection.request(
 #                get_url_path(network_href)).object
-             network_elem = {'name': ex_network, 'href': network_href}
+            network_elem = {'name': ex_network, 'href': network_href}
         else:
             network_elem = None
 
